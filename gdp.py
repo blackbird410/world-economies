@@ -114,7 +114,7 @@ def log_progress(message):
 
 
 # ETL process
-log_progress("ETL Job started\n-------------------------------------------")
+log_progress("ETL Job started")
 
 log_progress("Extract phase Started")
 extracted_data = extract()
@@ -126,5 +126,5 @@ log_progress("Transform phase Ended")
 
 log_progress("Load phase Started")
 load(target_file, db, db_table_name, attribute_list, file_path, transformed_data)
-log_progress("Load phase Ended")
+log_progress("Load phase Ended\n-------------------------------------------")
 print("ETL Job completed")
