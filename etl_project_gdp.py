@@ -113,18 +113,26 @@ def log_progress(message):
         f.write(f"{timestamp}, {message}\n")
 
 
-# ETL process
-log_progress("ETL Job started")
+if __name__ == '__main__':
+    # ETL process
+    log_progress("ETL Job started")
 
-log_progress("Extract phase Started")
-extracted_data = extract()
-log_progress("Extract phase Ended")
+    log_progress("Extract phase Started")
+    extracted_data = extract()
+    log_progress("Extract phase Ended")
 
-log_progress("Transform phase Started")
-transformed_data = transform(extracted_data)
-log_progress("Transform phase Ended")
+    log_progress("Transform phase Started")
+    transformed_data = transform(extracted_data)
+    log_progress("Transform phase Ended")
 
-log_progress("Load phase Started")
-load(target_file, db, db_table_name, attribute_list, file_path, transformed_data)
-log_progress("Load phase Ended\n-------------------------------------------")
-print("ETL Job completed")
+    log_progress("Load phase Started")
+    load(target_file, db, db_table_name, attribute_list, file_path, transformed_data)
+    log_progress("Load phase Ended\n-------------------------------------------")
+    print("ETL Job completed")
+
+    # Query database to display only the entries with more than 100 billion USD
+    conn = sqlite3.connect(db)
+    query_statement = f"SELECT * FROM Countries_by_GDP WHERE GDP_USD_billion > 100"
+    query_output = pd.read_sql(query_statement, conn)
+    print(query_statement)
+    print(query_output)
